@@ -22,6 +22,7 @@ import chatWootClient from './chatWootClient';
 import { autoDownload, callWebHook, startHelper } from './functions';
 import { clientsArray, eventEmitter } from './sessionUtil';
 import Factory from './tokenStore/factory';
+import config from '../config';
 
 export default class CreateSessionUtil {
   startChatWootClient(client: any) {
@@ -47,7 +48,9 @@ export default class CreateSessionUtil {
 
       const tokenStore = new Factory();
       const myTokenStore = tokenStore.createTokenStory(client);
+      console.log('myTokenStore', myTokenStore);
       const tokenData = await myTokenStore.getToken(session);
+      console.log('tokenData', tokenData);
 
       if (!tokenData) {
         myTokenStore.setToken(session, {});

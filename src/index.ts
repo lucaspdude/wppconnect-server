@@ -38,7 +38,7 @@ import { createLogger } from './util/logger';
 
 export const logger = createLogger(config.log);
 
-export function initServer(serverOptions: any) {
+export function initServer(serverOptions: any): any {
   if (typeof serverOptions !== 'object') {
     serverOptions = {};
   }
