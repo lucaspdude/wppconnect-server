@@ -22,11 +22,11 @@ export default {
     onRevokedMessage: true,
     onLabelUpdated: true,
     onSelfMessage: false,
-    ignore: ['status@broadcast'],
+    ignore: [process.env.WEBHOOK_IGNORE_ARRAY],
   },
   websocket: {
     autoDownload: false,
-    uploadS3: true,
+    uploadS3: false,
   },
   chatwoot: {
     sendQrCode: true,
@@ -39,7 +39,7 @@ export default {
   },
   log: {
     level: process.env.LOG_LEVEL ?? 'error', // Before open a issue, change level to silly and retry a action
-    logger: ['console', 'file'],
+    logger: ['console'],
   },
   createOptions: {
     browserArgs: [
@@ -85,7 +85,7 @@ export default {
     mongodbUser: process.env.MONGO_USER,
     mongodbPassword: process.env.MONGO_PASSWORD,
     mongodbHost: process.env.MONGO_HOST,
-    mongoIsRemote: true,
+    mongoIsRemote: process.env.MONGO_IS_REMOTE ?? false,
     mongoURLRemote: process.env.MONGO_URL,
     mongodbPort: process.env.MONGO_PORT,
     redisHost: process.env.REDIS_HOST,
