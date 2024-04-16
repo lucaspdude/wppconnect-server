@@ -7,10 +7,7 @@ const mongoose =
 if (config.tokenStoreType === 'mongodb') {
   mongoose.Promise = global.Promise;
 
-  mongoose.connect(config.db.mongoURLRemote, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  mongoose.connect(config.db.mongoURLRemote);
 }
 
 export default mongoose;
