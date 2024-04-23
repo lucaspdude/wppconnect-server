@@ -22,7 +22,7 @@ export default {
     onRevokedMessage: true,
     onLabelUpdated: true,
     onSelfMessage: false,
-    ignore: [process.env.WEBHOOK_IGNORE_ARRAY],
+    ignore: ['status@broadcast', 'onpresencechanged', 'status-find'],
   },
   websocket: {
     autoDownload: false,
