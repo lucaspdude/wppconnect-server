@@ -6,7 +6,7 @@ let RedisClient: any = null;
 
 if (config.tokenStoreType === 'redis') {
   RedisClient = redis.createClient({
-    url: config.db.redisURL,
+    url: null,
     legacyMode: true,
   });
 }

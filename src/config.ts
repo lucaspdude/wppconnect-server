@@ -90,12 +90,6 @@ export default {
     mongoIsRemote: process.env.MONGO_IS_REMOTE ?? false,
     mongoURLRemote: process.env.MONGO_URL,
     mongodbPort: process.env.MONGO_PORT,
-    redisHost: process.env.REDIS_HOST,
-    redisPort: process.env.REDIS_PORT,
-    redisPassword: process.env.REDIS_PASSWORD,
-    redisDb: 'default',
-    redisPrefix: process.env.REDIS_PREFIX,
-    redisURL: process.env.REDIS_URL,
   },
   aws_s3: {
     region: 'sa-east-1' as any,
