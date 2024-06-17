@@ -116,6 +116,7 @@ export async function callWebHook(
   data: any
 ) {
   const webhook = req.serverOptions.webhook.url;
+  req.logger.warn('webhook', webhook);
   if (webhook) {
     if (
       req.serverOptions.webhook?.ignore &&
@@ -123,8 +124,10 @@ export async function callWebHook(
         req.serverOptions.webhook.ignore.includes(data?.from) ||
         req.serverOptions.webhook.ignore.includes(data?.type))
     ) {
+      req.logger.warn('webhook-> not send');
       return;
     }
+    req.logger.warn('webhook-> should send');
 
     try {
       const chatId =

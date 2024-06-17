@@ -16,13 +16,13 @@
 import { create, SocketState } from '@wppconnect-team/wppconnect';
 import { Request } from 'express';
 
+import config from '../config';
 import { download } from '../controller/sessionController';
 import { WhatsAppServer } from '../types/WhatsAppServer';
 import chatWootClient from './chatWootClient';
 import { autoDownload, callWebHook, startHelper } from './functions';
 import { clientsArray, eventEmitter } from './sessionUtil';
 import Factory from './tokenStore/factory';
-import config from '../config';
 
 export default class CreateSessionUtil {
   startChatWootClient(client: any) {
@@ -203,6 +203,8 @@ export default class CreateSessionUtil {
     }
 
     await this.checkStateSession(client, req);
+
+    req.logger.warn('should listen to messages');
     await this.listenMessages(client, req);
 
     if (req.serverOptions.webhook.listenAcks) {
@@ -227,6 +229,7 @@ export default class CreateSessionUtil {
 
   async listenMessages(client: WhatsAppServer, req: Request) {
     await client.onMessage(async (message: any) => {
+      req.logger.warn('listenMessages', JSON.stringify(message));
       eventEmitter.emit(`mensagem-${client.session}`, client, message);
       callWebHook(client, req, 'onmessage', message);
       if (message.type === 'location')
@@ -250,8 +253,9 @@ export default class CreateSessionUtil {
       }
 
       req.io.emit('received-message', { response: message });
-      if (req.serverOptions.webhook.onSelfMessage && message.fromMe)
+      if (req.serverOptions.webhook.onSelfMessage && message.fromMe) {
         callWebHook(client, req, 'onselfmessage', message);
+      }
     });
 
     await client.onIncomingCall(async (call) => {

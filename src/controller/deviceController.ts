@@ -253,7 +253,7 @@ export async function getAllChatsWithMessages(req: Request, res: Response) {
      }
    */
   try {
-    const response = await req.client.getAllChatsWithMessages();
+    const response = await req.client.listChats();
     return res.status(200).json({ status: 'success', response: response });
   } catch (e) {
     req.logger.error(e);
