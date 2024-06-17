@@ -115,18 +115,17 @@ export async function callWebHook(
   event: any,
   data: any
 ) {
-  const webhook =
-    client?.config.webhook || req.serverOptions.webhook.url || false;
+  const webhook = req.serverOptions.webhook.url;
   if (webhook) {
     if (
       req.serverOptions.webhook?.ignore &&
       (req.serverOptions.webhook.ignore.includes(event) ||
         req.serverOptions.webhook.ignore.includes(data?.from) ||
         req.serverOptions.webhook.ignore.includes(data?.type))
-    )
+    ) {
       return;
-    if (req.serverOptions.webhook.autoDownload)
-      await autoDownload(client, req, data);
+    }
+
     try {
       const chatId =
         data.from ||
@@ -138,7 +137,8 @@ export async function callWebHook(
 
       api
         .post(webhook, data)
-        .then(() => {
+        .then((res) => {
+          req.logger.info('Called webhook', JSON.stringify(res));
           try {
             const events = ['unreadmessages', 'onmessage'];
             if (events.includes(event) && req.serverOptions.webhook.readMessage)
@@ -149,7 +149,7 @@ export async function callWebHook(
           req.logger.warn('Error calling Webhook.', e);
         });
     } catch (e) {
-      req.logger.error(e);
+      req.logger.error('SOme other error calling webhook', e);
     }
   }
 }
