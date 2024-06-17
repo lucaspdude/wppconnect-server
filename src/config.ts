@@ -1,3 +1,5 @@
+import { ServerOptions } from './types/ServerOptions';
+
 export default {
   secretKey: process.env.SECURE_TOKEN,
   host: 'http://localhost',
@@ -96,11 +98,11 @@ export default {
     redisURL: process.env.REDIS_URL,
   },
   aws_s3: {
-    region: 'sa-east-1',
-    access_key_id: process.env.BUCKET_KEY,
-    secret_key: process.env.BUCKET_SECRET,
-    defaultBucketName: process.env.BUCKET_NAME,
-    endpoint: process.env.BUCKET_URL,
+    region: 'sa-east-1' as any,
+    access_key_id: null,
+    secret_key: null,
+    defaultBucketName: null,
+    endpoint: null,
     forcePathStyle: null,
   },
-};
+} as unknown as ServerOptions;
